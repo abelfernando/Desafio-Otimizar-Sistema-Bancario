@@ -63,6 +63,43 @@ def criar_usuario(usuarios):
     usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco})
     print("\nUsuário criado com sucesso!")
 
+def criar_conta(AGENCIA, numero_conta, usuarios, contas):
+    """Cria uma nova conta bancária para um usuário existente."""
+    cpf = input("Informe o CPF do usuário: ")
+    usuario = filtrar_usuario(cpf, usuarios)
+
+    if usuario:
+        contas.append({"agencia": AGENCIA, "numero_conta": numero_conta, "usuario": usuario})
+        numero_conta += 1
+        print("\nConta criada com sucesso!")
+        return numero_conta
+    
+    print("\nUsuário não encontrado, fluxo de criação de conta encerrado!")
+    return numero_conta
+
+def listar_contas(contas):
+    """Lista todas as contas bancárias criadas no sistema."""
+    for conta in contas:
+        linha = f"""\
+            Agência:\t{conta['agencia']}
+            C/C:\t{conta['numero_conta']}
+            Titular:\t{conta['usuario']['nome']}
+        """
+        print("=" * 100)
+        print(textwrap.dedent(linha))
+
+def listar_usuarios(usuarios):
+    """Lista todos os usuários cadastrados no sistema."""
+    for usuario in usuarios:
+        linha = f"""\
+            Nome:\t{usuario['nome']}
+            CPF:\t{usuario['cpf']}
+            Data de Nascimento:\t{usuario['data_nascimento']}
+            Endereço:\t{usuario['endereco']}
+        """
+        print("=" * 100)
+        print(textwrap.dedent(linha))
+
 
 def menu():
     """Exibe o menu de opções do sistema bancário."""
@@ -72,7 +109,9 @@ def menu():
     [s]\tSacar
     [e]\tExtrato
     [nu]\tNovo Usuário
+    [lu]\tListar Usuários
     [nc]\tNova Conta
+    [lc]\tListar Contas
     [q]\tSair
     
     => """
@@ -89,6 +128,8 @@ def main():
     extrato = ""
     numero_saques = 0
     usuarios = []
+    contas = []
+    numero_conta = 1
     
     
     while True:
@@ -111,6 +152,15 @@ def main():
 
         elif opcao == "nu":
             criar_usuario(usuarios)
+
+        elif opcao == "nc":
+            numero_conta = criar_conta(AGENCIA, numero_conta, usuarios, contas)
+
+        elif opcao == "lc":
+            listar_contas(contas)
+        
+        elif opcao == "lu":
+            listar_usuarios(usuarios)
     
         elif opcao == "q":
             break
