@@ -1,3 +1,5 @@
+import textwrap
+
 def deposito(saldo, valor, extrato, /):
     """Realiza um depósito na conta bancária.
     Parâmetros apenas por posição: (saldo, valor, extrato)"""
@@ -41,28 +43,53 @@ def exibir_extrato(saldo, /, *, extrato):
     print(f"\nSaldo:\tR$ {saldo:.2f}")
     print("==========================================")
 
+def filtrar_usuario(cpf, usuarios):
+    """Filtra um usuário pelo CPF."""
+    usuarios_filtrados = [usuario for usuario in usuarios if usuario["cpf"] == cpf]
+    return usuarios_filtrados[0] if usuarios_filtrados else None
+
+def criar_usuario(usuarios):
+    """Cria um novo usuário no sistema bancário."""
+    cpf = input("CPF (somente números): ")
+    usuario = filtrar_usuario(cpf, usuarios)
+
+    if usuario:
+        print("Já existe usuário com esse CPF!")
+        return
+    
+    nome = input("Nome completo: ")
+    data_nascimento = input("Data de nascimento (dd-mm-aaaa): ")
+    endereco = input("Endereço (logradouro, número - bairro - cidade/UF): ")
+    usuarios.append({"nome": nome, "data_nascimento": data_nascimento, "cpf": cpf, "endereco": endereco})
+    print("\nUsuário criado com sucesso!")
+
 
 def menu():
     """Exibe o menu de opções do sistema bancário."""
     menu = """
     
-    [d] Depositar
-    [s] Sacar
-    [e] Extrato
-    [q] Sair
+    [d]\tDepositar
+    [s]\tSacar
+    [e]\tExtrato
+    [nu]\tNovo Usuário
+    [nc]\tNova Conta
+    [q]\tSair
     
     => """
-    return input(menu)
+    return input(textwrap.dedent(menu))
 
 
 def main():
     """Função principal do sistema bancário."""
-    
+    LIMITE_SAQUES = 3
+    AGENCIA = "0001"
+
     saldo = 0
     limite = 500
     extrato = ""
     numero_saques = 0
-    LIMITE_SAQUES = 3
+    usuarios = []
+    
     
     while True:
     
@@ -81,6 +108,9 @@ def main():
     
         elif opcao == "e":
             exibir_extrato(saldo, extrato = extrato)
+
+        elif opcao == "nu":
+            criar_usuario(usuarios)
     
         elif opcao == "q":
             break
