@@ -99,6 +99,11 @@ A função depósito deve receber os argumentos apenas por posição (positional
 Sugestão de argumentos: saldo, valor, extrato
 Sugestão de retorno: saldo e extrato
 
+#### Extrato
+A função extrato deve receber os argumentos por posição e nome (positional only e keyword only).
+Argumentos posicionais: saldo
+Argumentos nomeados: extrato
+
 #### Criar usuário (cliente)
 O programa deve armazenar os usuários em uma lista, um usuário é composto po: nome, data de nascimento, cpf e endereço. O endereço é uma string com o formato: logradouro, nr0 - bairro - cidade/UF. Deve ser armazenado somente os números do CPF. Não podemos cadastrar 2 usuários com o mesmo CPF.
 
