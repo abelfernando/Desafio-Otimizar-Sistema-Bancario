@@ -32,6 +32,16 @@ def saque(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
     return saldo, extrato, numero_saques
 
 
+def exibir_extrato(saldo, extrato):
+    """Exibe o extrato da conta bancária.
+    Parâmetros por posição ou por nome: (saldo, extrato)"""
+
+    print("\n================ EXTRATO ================")
+    print("Não foram realizadas movimentações." if not extrato else extrato)
+    print(f"\nSaldo: R$ {saldo:.2f}")
+    print("==========================================")
+
+
 menu = """
 
 [d] Depositar
@@ -63,10 +73,7 @@ while True:
                                               numero_saques=numero_saques, limite_saques=LIMITE_SAQUES)
 
     elif opcao == "e":
-        print("\n================ EXTRATO ================")
-        print("Não foram realizadas movimentações." if not extrato else extrato)
-        print(f"\nSaldo: R$ {saldo:.2f}")
-        print("==========================================")
+        exibir_extrato(saldo, extrato)
 
     elif opcao == "q":
         break
