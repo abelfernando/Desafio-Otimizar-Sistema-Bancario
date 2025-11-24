@@ -42,41 +42,51 @@ def exibir_extrato(saldo, /, *, extrato):
     print("==========================================")
 
 
-menu = """
+def menu():
+    """Exibe o menu de opções do sistema bancário."""
+    menu = """
+    
+    [d] Depositar
+    [s] Sacar
+    [e] Extrato
+    [q] Sair
+    
+    => """
+    return input(menu)
 
-[d] Depositar
-[s] Sacar
-[e] Extrato
-[q] Sair
 
-=> """
+def main():
+    """Função principal do sistema bancário."""
+    
+    saldo = 0
+    limite = 500
+    extrato = ""
+    numero_saques = 0
+    LIMITE_SAQUES = 3
+    
+    while True:
+    
+        opcao = menu()
+    
+        if opcao == "d":
+            valor = float(input("Informe o valor do depósito: "))
+    
+            saldo, extrato = deposito(saldo, valor, extrato)
+    
+        elif opcao == "s":
+            valor = float(input("Informe o valor do saque: "))
+    
+            saldo, extrato, numero_saques = saque(saldo=saldo, valor=valor, extrato=extrato, limite=limite,
+                                                numero_saques=numero_saques, limite_saques=LIMITE_SAQUES)
+    
+        elif opcao == "e":
+            exibir_extrato(saldo, extrato = extrato)
+    
+        elif opcao == "q":
+            break
+        
+        else:
+            print("Operação inválida, por favor selecione novamente a operação desejada.")
 
-saldo = 0
-limite = 500
-extrato = ""
-numero_saques = 0
-LIMITE_SAQUES = 3
 
-while True:
-
-    opcao = input(menu)
-
-    if opcao == "d":
-        valor = float(input("Informe o valor do depósito: "))
-
-        saldo, extrato = deposito(saldo, valor, extrato)
-
-    elif opcao == "s":
-        valor = float(input("Informe o valor do saque: "))
-
-        saldo, extrato, numero_saques = saque(saldo=saldo, valor=valor, extrato=extrato, limite=limite,
-                                              numero_saques=numero_saques, limite_saques=LIMITE_SAQUES)
-
-    elif opcao == "e":
-        exibir_extrato(saldo, extrato = extrato)
-
-    elif opcao == "q":
-        break
-
-    else:
-        print("Operação inválida, por favor selecione novamente a operação desejada.")
+main()
