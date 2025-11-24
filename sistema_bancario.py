@@ -32,7 +32,7 @@ def saque(*, saldo, valor, extrato, limite, numero_saques, limite_saques):
     return saldo, extrato, numero_saques
 
 
-def exibir_extrato(saldo, extrato):
+def exibir_extrato(saldo, /, *, extrato):
     """Exibe o extrato da conta bancária.
     Parâmetros por posição ou por nome: (saldo, extrato)"""
 
@@ -73,7 +73,7 @@ while True:
                                               numero_saques=numero_saques, limite_saques=LIMITE_SAQUES)
 
     elif opcao == "e":
-        exibir_extrato(saldo, extrato)
+        exibir_extrato(saldo, extrato = extrato)
 
     elif opcao == "q":
         break
