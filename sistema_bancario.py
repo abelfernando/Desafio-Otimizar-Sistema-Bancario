@@ -1,3 +1,15 @@
+def deposito(saldo, valor, extrato, /):
+    """Realiza um depósito na conta bancária.
+    Parâmetros apenas por posição: (saldo, valor, extrato)"""
+    if valor > 0:
+        saldo += valor
+        extrato += f"Depósito: R$ {valor:.2f}\n"
+        return saldo, extrato
+    else:
+        print("Operação falhou! O valor informado é inválido.")
+        return saldo, extrato
+
+
 menu = """
 
 [d] Depositar
@@ -20,12 +32,7 @@ while True:
     if opcao == "d":
         valor = float(input("Informe o valor do depósito: "))
 
-        if valor > 0:
-            saldo += valor
-            extrato += f"Depósito: R$ {valor:.2f}\n"
-
-        else:
-            print("Operação falhou! O valor informado é inválido.")
+        saldo, extrato = deposito(saldo, valor, extrato)
 
     elif opcao == "s":
         valor = float(input("Informe o valor do saque: "))
